@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tests</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<style>
+.ques {
+    color: darkslateblue;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 260px;
+  height: 100px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f2f2f2;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  z-index: 2;
+  content: "";
+  height: 96px;
+  width: 96px;
+  left: 2px;
+  bottom: 2px;
+  background-color: darkslategrey;
+      -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+  -webkit-transition: .4s;
+  transition: all 0.4s ease-in-out;
+}
+.slider:after {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  content: "AUTOMATICO";
+    font-size: 20px;
+    text-align: left !important;
+    line-height: 95px;
+  padding-left: 0;
+    width: 260px;
+    color: #fff;
+    height: 100px;
+    border-radius: 100px;
+    background-color: #ff6418;
+    -webkit-transform: translateX(-160px);
+    -ms-transform: translateX(-160px);
+    transform: translateX(-160px);
+    transition: all 0.4s ease-in-out;
+}
+
+input:checked + .slider:after {
+  -webkit-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  transform: translateX(0px);
+  /*width: 235px;*/
+  padding-left: 25px;
+}
+
+input:checked + .slider:before {
+  background-color: #fff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(160px);
+  -ms-transform: translateX(160px);
+  transform: translateX(160px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 100px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.absolute-no {
+	position: absolute;
+	left: 0;
+	color: darkslategrey;
+	text-align: right !important;
+    font-size: 25px;
+    width: calc(100% - 25px);
+    height: 100px;
+    line-height: 95px;
+    cursor: pointer;
+}
+</style>
+<style>
+.vertical-tabs .nav-tabs .nav-link{
+    border-radius: 0;
+    background:#c10101;
+    text-align:center;
+    font-size: 16px;
+    border:1px solid #424242;
+    color:#fff;
+    height:40px;
+    width: 120px;
+}
+ .vertical-tabs .nav-tabs .nav-link.active{
+    background-color:#700000!important;
+    color:#fff;
+}
+ .vertical-tabs .tab-content>.active{
+    background:#fff;
+    display:block;
+}
+ .vertical-tabs .nav.nav-tabs{
+    border-bottom:0;
+    border-right:3px solid #000;
+    display:block;
+    float:left;
+    margin-right:20px;
+    padding-right:15px;
+}
+ .vertical-tabs .sv-tab-panel{
+    background:#fff;
+    height:50%;
+    padding-top:2%;
+}
+@media only screen and (max-width: 420px){
+  .titulo{font-size: 22px}
+}
+@media only screen and (max-width: 325px){
+  .vertical-tabs{ padding:8px;}
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color:#fff;
+    font-size: 9px;
+}
+
+</style>
+    <body style="background-color:lightgray">
+      
+      <br><br><br>    
+        <div>
+                <label class="switch" style="left:35%; top:5%;">
+                    <input id="chkAuto"  onchange="toggleCheckbox(this)" type="checkbox" checked>
+                    <span class="slider round"></span>
+                    <span class="absolute-no">MANUAL</span>
+                </label>
+        </div>
+        <br>
+      <!--nav-->  
+      <div class="container">
+        <div class="vertical-tabs">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#pag1" role="tab" aria-controls="home">Tablero 1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="profile">Tablero 2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="messages">Tablero 3</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="settings">Tablero 4</a>
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="settings">Tablero 5</a>
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="settings">Tablero 6</a>
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#pag1" role="tab" aria-controls="settings">Página 7</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="pag1" role="tabpanel">
+              <div class="sv-tab-panel">
+                <div class="container">
+                  <div class="row">
+                      <div style="background-color: lightseagreen" class="col-md-3">
+                              <div id="chart_div" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div_div" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button1(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button1(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color: lightseagreen" class="col-md-3">
+                              <div id="chart_div2" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div2_2" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button2(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button2(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color: lightseagreen" class="col-md-3">
+                              <div id="chart_div3" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div3_3" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button3(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button3(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color: lightseagreen" class="col-md-3">
+                              <div id="chart_div4" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div4_4" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button4(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button4(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div style="background-color:lightsalmon" class="col-md-3">
+                              <div id="chart_div5" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div5_5" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button5(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button5(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color:lightsalmon" class="col-md-3">
+                              <div id="chart_div6" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div6_6" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button6(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button6(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color:lightsalmon" class="col-md-3">
+                              <div id="chart_div7" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div7_7" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button7(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button7(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                      <div style="background-color:lightsalmon" class="col-md-3">
+                              <div id="chart_div8" style="width: 500px; height: 120px;"></div>
+                              <div id="chart_div8_8" style="width: 500px; height: 120px;"></div>
+                              <div>
+                                <label>RPM:</label>
+                                <br>
+                                <button onclick="button8(true)" class="btnRPM btn btn-success btn-pressure pull-left">Subir RPM</button>
+                                <button onclick="button8(false)" class="btnRPM btn btn-danger btn-pressure pull-left">Bajar RPM</button>
+                              </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="pag2" role="tabpanel">
+              <div class="sv-tab-panel">
+                <h3>TAB 2</h3>
+                <p>CONTEUDO 2</p>
+              </div>
+            </div>
+            <div class="tab-pane" id="pag3" role="tabpanel">
+              <div class="sv-tab-panel">
+                <h3>TAB 3</h3>
+                <p>CONTEUDO 3</p>
+              </div>
+            </div>
+            <div class="tab-pane" id="pag4" role="tabpanel">
+              <div class="sv-tab-panel">
+               <h3>TAB 4</h3>
+                <p>CONTEUDO 4</p>
+              </div>
+            </div>
+    
+            <div class="tab-pane" id="pag5" role="tabpanel">
+              <div class="sv-tab-panel">
+                <h3>TAB 5</h3>
+                <p>CONTEUDO 5</p>
+              </div>
+            </div>
+    
+            <div class="tab-pane" id="pag6" role="tabpanel">
+              <div class="sv-tab-panel">
+                <h3>TAB 6</h3>
+                <p>CONTEUDO 6</p>
+              </div>
+            </div>
+    
+            <div class="tab-pane" id="pag7" role="tabpanel">
+              <div class="sv-tab-panel">
+                <h3>TAB 7</h3>
+                <p>CONTEUDO 7</p>
+              </div>
+            </div>
+    
+          </div>
+        </div>
+      </div>    
+      <!--end nav-->
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript">
+         google.charts.load('current', {'packages':['gauge']});
+         google.charts.setOnLoadCallback(drawChart);
+        
+        var m = 1900;
+        var b = 0;
+        var incremento = 50;
+        var decremento = 50;
+        $(".btnRPM").attr("disabled", true); //Default val
+        var chart, chart2, chart3, chart4, chart5, chart6, chart7, chart8, chart9, chart10, chart11, chart12, chart13, chart14, chart15, chart16;
+        var options1, options2, data, data2;
+
+         function drawChart() {
+   
+           data = google.visualization.arrayToDataTable([
+             ['Label', 'Value'],
+             ['Turbidez', 1]
+           ]);
+           data2 = google.visualization.arrayToDataTable([
+             ['Label', 'Value'],
+             ['RPM', 2000]
+           ]);
+   
+           options1 = {
+             width: 400, height: 120,
+             redFrom: 0.7, redTo: 1,
+             yellowFrom:0.49, yellowTo: 0.69,
+             minorTicks: 5, max:1
+           };
+           options2 = {
+             width: 400, height: 120,
+             redFrom: 1930, redTo: 1950,
+             yellowFrom:1000, yellowTo: 1930,
+             minorTicks: 5, max:2000
+           };
+   
+           chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+           chart2 = new google.visualization.Gauge(document.getElementById('chart_div_div'));
+   
+           chart.draw(data, options1);
+           chart2.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1){ 
+               var turbidez = randomIntFromInterval(0,1);
+               if($("#chkAuto").prop("checked")) velocidad1 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad1);
+
+                
+               chart.draw(data, options1);
+                                if($("#chkAuto").prop("checked")) chart2.draw(data2, options2);
+             }
+           }, 1000);
+
+           //Chart 2
+           chart3 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+           chart4 = new google.visualization.Gauge(document.getElementById('chart_div2_2'));
+   
+           chart3.draw(data, options1);
+           chart4.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1){
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad2 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad2);
+
+                chart3.draw(data, options1);
+                if($("#chkAuto").prop("checked")) chart4.draw(data2, options2);
+             }
+           }, 1000);
+         
+           //Chart 3
+           chart5 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+           chart6 = new google.visualization.Gauge(document.getElementById('chart_div3_3'));
+   
+           chart5.draw(data, options1);
+           chart6.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad3 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad3);
+
+                chart5.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart6.draw(data2, options2);
+             }
+           }, 1000);
+
+           //Chart 4
+           chart7 = new google.visualization.Gauge(document.getElementById('chart_div4'));
+           chart8 = new google.visualization.Gauge(document.getElementById('chart_div4_4'));
+   
+           chart7.draw(data, options1);
+           chart8.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad4 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad4);
+
+                chart7.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart8.draw(data2, options2);
+             }
+           }, 1000);
+
+           //Chart 5
+           chart9 = new google.visualization.Gauge(document.getElementById('chart_div5'));
+           chart10 = new google.visualization.Gauge(document.getElementById('chart_div5_5'));
+   
+           chart9.draw(data, options1);
+           chart10.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad5 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad5);
+
+                chart9.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart10.draw(data2, options2);
+             }
+           }, 1000);
+         
+           //Chart 6
+           chart11 = new google.visualization.Gauge(document.getElementById('chart_div6'));
+           chart12 = new google.visualization.Gauge(document.getElementById('chart_div6_6'));
+   
+           chart11.draw(data, options1);
+           chart12.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+             
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad6 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad6);
+
+                chart11.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart12.draw(data2, options2);
+             }
+           }, 1000);
+         
+         //Chart 7
+         chart13 = new google.visualization.Gauge(document.getElementById('chart_div7'));
+           chart14 = new google.visualization.Gauge(document.getElementById('chart_div7_7'));
+   
+           chart13.draw(data, options1);
+           chart14.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad7 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad7);
+
+                chart13.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart14.draw(data2, options2);
+             }
+           }, 1000);
+         
+            //Chart 8
+            chart15 = new google.visualization.Gauge(document.getElementById('chart_div8'));
+           chart16 = new google.visualization.Gauge(document.getElementById('chart_div8_8'));
+   
+           chart15.draw(data, options1);
+           chart16.draw(data2, options2);
+   
+           setInterval(function() {   
+             if(1)
+             {
+              
+              var turbidez = randomIntFromInterval(0,1);
+              if($("#chkAuto").prop("checked")) velocidad8 = m*turbidez + b;
+                data.setValue(0, 1, turbidez);
+                data2.setValue(0, 1, velocidad8);
+
+                chart15.draw(data, options1);
+                if($("#chkAuto").prop("checked"))                 chart16.draw(data2, options2);
+             }
+           }, 1000);
+         
+         
+         }
+         function button1(state)
+         {
+           if(state)
+           {
+             if(velocidad1<m)
+             {
+              velocidad1+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad1>0)
+             {
+              velocidad1-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad1);
+           chart2.draw(data2, options2);
+         }
+
+         function button2(state)
+         {
+           if(state)
+           {
+             if(velocidad2<m)
+             {
+              velocidad2+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad2>0)
+             {
+              velocidad2-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad2);
+           chart4.draw(data2, options2);
+         }
+
+         function button3(state)
+         {
+           if(state)
+           {
+             if(velocidad3<m)
+             {
+              velocidad3+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad3>0)
+             {
+              velocidad3-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad3);
+           chart6.draw(data2, options2);
+         }
+         function button4(state)
+         {
+           if(state)
+           {
+             if(velocidad4<m)
+             {
+              velocidad4+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad4>0)
+             {
+              velocidad4-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad4);
+           chart8.draw(data2, options2);
+         }
+         function button5(state)
+         {
+           if(state)
+           {
+             if(velocidad5<m)
+             {
+              velocidad5+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad5>0)
+             {
+              velocidad5-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad5);
+           chart10.draw(data2, options2);
+         }
+         function button6(state)
+         {
+           if(state)
+           {
+             if(velocidad6<m)
+             {
+              velocidad6+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad6>0)
+             {
+              velocidad6-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad6);
+           chart12.draw(data2, options2);
+         }
+
+         function button7(state)
+         {
+           if(state)
+           {
+             if(velocidad7<m)
+             {
+              velocidad7+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad7>0)
+             {
+              velocidad7-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad7);
+           chart14.draw(data2, options2);
+         }
+
+         function button8(state)
+         {
+           if(state)
+           {
+             if(velocidad8<m)
+             {
+              velocidad8+=incremento;
+             }
+           }
+           else
+           {
+             if(velocidad8>0)
+             {
+              velocidad8-=decremento;
+             }
+           }
+           data2.setValue(0, 1, velocidad8);
+           chart16.draw(data2, options2);
+         }
+
+
+       </script>
+       <script>
+       function randomIntFromInterval(min, max) { // min and max included 
+          //return Math.floor(Math.random() * (max - min + 1) + min);
+          return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
+        }
+    </script>
+    <script>
+    function toggleCheckbox(element)
+    {
+      //element.checked = !element.checked;
+      $(".btnRPM").attr("disabled", element.checked);
+    }
+    </script>
+    </body>
+</html>
