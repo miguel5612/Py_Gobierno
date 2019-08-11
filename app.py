@@ -16,6 +16,20 @@ app = Flask(__name__)
 def index(name=None):
     return render_template('inicio.html', name=name)
 
+
+@app.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    value = request.args.get('term')
+    sql = "select name from data_table where name like '%"+value+"%'"
+    #conn = sqlite3.connect(DATABASE)
+    data_list = []
+    cursor = conn.execute(sql)
+    for row in cursor:
+        data_list.append(row[0])
+    conn.close()
+
+    return jsonify(json_list=data_list)
+
 @app.route('/dash', methods=['GET'])
 def dashboard():
     return render_template('dash.html')
